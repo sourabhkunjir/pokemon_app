@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon_app/data/models/pokemon.dart';
 import 'package:pokemon_app/provider/pokemon_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:pokemon_app/themes/theme_provider.dart';
+import 'package:pokemon_app/ui/screens/fav_pokemon_screen.dart';
 import 'package:pokemon_app/ui/screens/pokemon_detail_screen.dart';
 import 'package:pokemon_app/utils/helpers.dart';
 
@@ -16,6 +18,20 @@ class AllPokemonScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text("Pokemon"),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => FavPokemonScreen(),
+                ));
+              },
+              icon: Icon(Icons.favorite)),
+          IconButton(
+              onPressed: () {
+                ref.read(themeProvider.notifier).changeTheme();
+              },
+              icon: Icon(Icons.lightbulb))
+        ],
       ),
       body: allPokemon.when(
         data: (pokemonData) {
@@ -28,8 +44,8 @@ class AllPokemonScreen extends ConsumerWidget {
               return InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => PokemonDetailScreen(pokemon:pokemon),
-                  )); 
+                    builder: (context) => PokemonDetailScreen(pokemon: pokemon),
+                  ));
                 },
                 child: Card(
                   color: Helpers.getPokemonCardColour(

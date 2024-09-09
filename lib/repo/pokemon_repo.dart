@@ -16,8 +16,7 @@ class PokemonRepo {
       final List<Pokemon> pokemonList = [];
       final decodedData = jsonDecode(response.data);
       log(decodedData.toString());
-      // final pokemonData = decodedData["Pokemon"];
-      // 
+      
       decodedData.forEach((pokemon) {
         pokemonList.add(Pokemon.fromJson(pokemon));
       });

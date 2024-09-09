@@ -1,15 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon_app/data/models/pokemon.dart';
+import 'package:pokemon_app/repo/hive_repo.dart';
 import 'package:pokemon_app/ui/widgets/detail_pokemon_description.dart';
 import 'package:pokemon_app/utils/helpers.dart';
+import 'package:pokemon_app/utils/rotating_image.dart';
 
-class PokemonDetailScreen extends StatelessWidget {
+class PokemonDetailScreen extends ConsumerWidget {
   const PokemonDetailScreen({super.key, required this.pokemon});
   final Pokemon pokemon;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -19,7 +22,13 @@ class PokemonDetailScreen extends StatelessWidget {
         foregroundColor: Colors.white,
         backgroundColor: Helpers.getPokemonCardColour(
             pokemonType: pokemon.typeofpokemon!.first),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.favorite))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                ref.read(hiveRepoProvider).addPokemonToHive(pokemon);
+              },
+              icon: Icon(Icons.favorite))
+        ],
       ),
       body: Stack(
         children: [
@@ -70,26 +79,39 @@ class PokemonDetailScreen extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  DetailPokemonDescription(width: width, title: "Name", value: pokemon.name!),
-                  DetailPokemonDescription(width: width, title: "Type", value: pokemon.typeofpokemon!.join(", ")),
-                  DetailPokemonDescription(width: width, title: "Speed", value: pokemon.speed.toString()),
-                  DetailPokemonDescription(width: width, title: "Hp", value: pokemon.hp.toString()),
-                  DetailPokemonDescription(width: width, title: "Attack", value: pokemon.attack.toString()),
-                  DetailPokemonDescription(width: width, title: "Height", value: pokemon.height!),
-                  DetailPokemonDescription(width: width, title: "Weakness", value: pokemon.weaknesses!.join(", ")),
+                  DetailPokemonDescription(
+                      width: width, title: "Name", value: pokemon.name!),
+                  DetailPokemonDescription(
+                      width: width,
+                      title: "Type",
+                      value: pokemon.typeofpokemon!.join(", ")),
+                  DetailPokemonDescription(
+                      width: width,
+                      title: "Speed",
+                      value: pokemon.speed.toString()),
+                  DetailPokemonDescription(
+                      width: width, title: "Hp", value: pokemon.hp.toString()),
+                  DetailPokemonDescription(
+                      width: width,
+                      title: "Attack",
+                      value: pokemon.attack.toString()),
+                  DetailPokemonDescription(
+                      width: width, title: "Height", value: pokemon.height!),
+                  DetailPokemonDescription(
+                      width: width,
+                      title: "Weakness",
+                      value: pokemon.weaknesses!.join(", ")),
                 ],
               ),
             ),
           ),
           Positioned(
-            top: height * 0.16,
-            left: (width / 2) - 100,
-            child: Image.asset(
-              "assets/images/pokeball.png",
-              height: 200,
-              width: 200,
-            ),
-          ),
+              top: height * 0.16,
+              left: (width / 2) - 100,
+              child: RotatingImage(
+                  imagePath: "assets/images/pokeball.png",
+                  height: 200,
+                  width: 200)),
           Positioned(
               top: height * 0.16,
               left: (width / 2) - 100,
@@ -107,5 +129,3 @@ class PokemonDetailScreen extends StatelessWidget {
     );
   }
 }
-
-
