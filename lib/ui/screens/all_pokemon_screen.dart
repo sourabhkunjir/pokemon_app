@@ -11,6 +11,9 @@ import 'package:pokemon_app/utils/helpers.dart';
 class AllPokemonScreen extends ConsumerWidget {
   const AllPokemonScreen({super.key});
 
+  
+  
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     AsyncValue<List<Pokemon>> allPokemon = ref.watch(pokemonFutureProvider);
@@ -52,6 +55,7 @@ class AllPokemonScreen extends ConsumerWidget {
                       pokemonType: pokemon.typeofpokemon!.first),
                   child: Stack(
                     children: [
+        
                       Positioned(
                         top: 20,
                         left: 10,
@@ -138,5 +142,7 @@ class AllPokemonScreen extends ConsumerWidget {
         ),
       ),
     );
+    
   }
+  
 }

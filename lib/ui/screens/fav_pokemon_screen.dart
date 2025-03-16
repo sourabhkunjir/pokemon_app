@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon_app/data/models/pokemon.dart';
-import 'package:pokemon_app/provider/pokemon_provider.dart';
+import 'package:pokemon_app/provider/fav_hive_provider.dart';
 import 'package:pokemon_app/repo/hive_repo.dart';
 
 class FavPokemonScreen extends ConsumerStatefulWidget {

@@ -3,7 +3,6 @@ import 'package:pokemon_app/utils/constant.dart';
 
 class Helpers {
   static Color? getPokemonCardColour({required String pokemonType}) {
-   
     switch (pokemonType) {
       case 'Normal':
         return lightBlue;

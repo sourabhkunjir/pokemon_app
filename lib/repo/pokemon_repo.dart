@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon_app/data/models/pokemon.dart';
@@ -12,18 +11,20 @@ class PokemonRepo {
   Future<List<Pokemon>> getPokemonList() async {
     final response = await _dioClient.get(APIEndpoints.baseUrl);
     if (response.statusCode == 200) {
-      log(response.data.toString());
+      // log(response.data.toString());
       final List<Pokemon> pokemonList = [];
       final decodedData = jsonDecode(response.data);
-      log(decodedData.toString());
-      
+      // log(decodedData.toString());
+
       decodedData.forEach((pokemon) {
         pokemonList.add(Pokemon.fromJson(pokemon));
       });
-      log(pokemonList.length.toString());
+      
+      // log(pokemonList.length.toString());
       return pokemonList;
+      
     } else {
-      log("Failed to fetch pokemon list");
+      // log("Failed to fetch pokemon list");
       throw Exception("Failed to fetch pokemon list");
     }
   }
